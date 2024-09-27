@@ -3,130 +3,97 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
-use App\Http\Requests\CreateStudentRequest;
-use App\Http\Requests\UpdateStudentRequest;
-use App\Http\Controllers\AppBaseController;
-use App\Repositories\StudentRepository;
 use Illuminate\Http\Request;
-use Flash;
 
-class StudentController extends AppBaseController
+class StudentController extends Controller
 {
-    /** @var StudentRepository $studentRepository*/
-    private $studentRepository;
-
-    public function __construct(StudentRepository $studentRepo)
-    {
-        $this->studentRepository = $studentRepo;
-    }
-
     /**
-     * Display a listing of the Student.
+     * Display a listing of the students.
      */
-    public function index(Request $request)
+    public function index()
     {
-        // $students = $this->studentRepository->paginate(10);
-
-        // return view('students.index')
-        //     ->with('students', $students);
+        // Retrieve all students from the database
         $students = Student::all();
 
+        $totalStudents = $students->count();
+        
+
+        // Return the view with the students data
         return view('pages.students.students', compact('students'));
     }
 
     /**
-     * Show the form for creating a new Student.
+     * Store a newly created student in the database.
      */
-    public function create()
+    public function store(Request $request)
     {
-        return view('students.create');
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'class' => 'required|string|max:255',
+            'parent' => 'required|string|max:255',
+            'age' => 'required|integer|min:1|max:100',
+        ]);
+
+        // Create new student entry
+        Student::create([
+            'name' => $validatedData['name'],
+            'class' => $validatedData['class'],
+            'parent' => $validatedData['parent'],
+            'age' => $validatedData['age'],
+        ]);
+
+        // Redirect back to the students index page with success message
+        return redirect()->route('students.index')->with('success', 'Student added successfully');
     }
 
     /**
-     * Store a newly created Student in storage.
-     */
-    public function store(CreateStudentRequest $request)
-    {
-        $input = $request->all();
-
-        $student = $this->studentRepository->create($input);
-
-        Flash::success('Student saved successfully.');
-
-        return redirect(route('students.index'));
-    }
-
-    /**
-     * Display the specified Student.
+     * Display the specified student.
      */
     public function show($id)
     {
-        $student = $this->studentRepository->find($id);
+        // Find the student by id
+        $student = Student::findOrFail($id);
 
-        if (empty($student)) {
-            Flash::error('Student not found');
-
-            return redirect(route('students.index'));
-        }
-
-        return view('students.show')->with('student', $student);
+        // Return the view to show a specific student's details
+        return view('pages.students.student', compact('student'));
     }
 
     /**
-     * Show the form for editing the specified Student.
+     * Update the specified student in storage.
      */
-    public function edit($id)
+    public function update(Request $request, $id)
     {
-        $student = $this->studentRepository->find($id);
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'class' => 'required|string|max:255',
+            'parent' => 'required|string|max:255',
+            'age' => 'required|integer|min:1|max:100',
+        ]);
 
-        if (empty($student)) {
-            Flash::error('Student not found');
+        // Find the student by id
+        $student = Student::findOrFail($id);
 
-            return redirect(route('students.index'));
-        }
+        // Update the student's information in the database
+        $student->update($validatedData);
 
-        return view('students.edit')->with('student', $student);
+        // Redirect back to the students index page with success message
+        return redirect()->route('students.index')->with('success', 'Student updated successfully');
     }
 
     /**
-     * Update the specified Student in storage.
-     */
-    public function update($id, UpdateStudentRequest $request)
-    {
-        $student = $this->studentRepository->find($id);
-
-        if (empty($student)) {
-            Flash::error('Student not found');
-
-            return redirect(route('students.index'));
-        }
-
-        $student = $this->studentRepository->update($request->all(), $id);
-
-        Flash::success('Student updated successfully.');
-
-        return redirect(route('students.index'));
-    }
-
-    /**
-     * Remove the specified Student from storage.
-     *
-     * @throws \Exception
+     * Remove the specified student from storage.
      */
     public function destroy($id)
     {
-        $student = $this->studentRepository->find($id);
+        // Find the student by id
+        $student = Student::findOrFail($id);
 
-        if (empty($student)) {
-            Flash::error('Student not found');
+        // Delete the student from the database
+        $student->delete();
 
-            return redirect(route('students.index'));
-        }
-
-        $this->studentRepository->delete($id);
-
-        Flash::success('Student deleted successfully.');
-
-        return redirect(route('students.index'));
+        // Redirect back to the students index page with success message
+        return redirect()->route('students.index')->with('success', 'Student deleted successfully');
     }
 }

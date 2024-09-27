@@ -38,22 +38,3 @@
     </div>
   </div>
 </div>
-<script>
-    $(document).ready(function() {
-  $('#addTeacherForm').on('submit', function(event) {
-    event.preventDefault();
-    $.ajax({
-      url: "{{ route('teachers.store') }}", // Define your route here
-      method: 'POST',
-      data: $(this).serialize(),
-      success: function(response) {
-        $('#addTeacherModal').modal('hide');
-        location.reload(); // Refresh to show the new teacher
-      },
-      error: function(xhr) {
-        console.log(xhr.responseText); // Handle errors here
-      }
-    });
-  });
-});
-    </script>

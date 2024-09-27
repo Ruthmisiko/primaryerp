@@ -14,7 +14,6 @@ class Teacher extends Model
         'contact_number',
         'designation',
         'email',
-        'subjects_taught',
         'assigned_class'        
     ];
 

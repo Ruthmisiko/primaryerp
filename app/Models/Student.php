@@ -13,6 +13,7 @@ class Student extends Model
         'class',
         'parent',
         'age',
+
     ];
 
     protected $casts = [

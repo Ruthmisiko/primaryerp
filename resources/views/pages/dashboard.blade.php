@@ -10,13 +10,13 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Money</p>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold"> TEACHERS</p>
                                     <h5 class="font-weight-bolder">
-                                        $53,000
+                                        {{ $totalTeachers}}
                                     </h5>
                                     <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+55%</span>
-                                        since yesterday
+                                        <span class="text-success text-sm font-weight-bolder"></span>
+                                       
                                     </p>
                                 </div>
                             </div>
@@ -35,13 +35,13 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Users</p>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">STUDENTS</p>
                                     <h5 class="font-weight-bolder">
-                                        2,300
+                                    {{ $totalStudents }}
                                     </h5>
                                     <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+3%</span>
-                                        since last week
+                                        <span class="text-success text-sm font-weight-bolder"></span>
+                                        
                                     </p>
                                 </div>
                             </div>
@@ -396,6 +396,7 @@
 
 @push('js')
     <script src="./assets/js/plugins/chartjs.min.js"></script>
+    
     <script>
         var ctx1 = document.getElementById("chart-line").getContext("2d");
 

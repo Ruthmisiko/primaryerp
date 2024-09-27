@@ -9,6 +9,10 @@
                     <div class="card-header pb-0">
                         <h6>Teachers table</h6>
                     </div>
+                     <!-- Add New Button to Trigger Modal -->
+                     <div class="add" style="display: flex; align-items: center;">
+                        <button type="button" class="btn btn-success" style=" margin-left: 90%;" data-bs-toggle="modal" data-bs-target="#addTeacherModal">Add New</button>
+                    </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
@@ -50,17 +54,17 @@
                                             <span class="badge badge-sm bg-gradient-success">{{$teacher->contact_number}}</span>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">2{{$teacher->designation}}</span>
+                                            <span class="text-secondary text-xs font-weight-bold">{{$teacher->designation}}</span>
                                         </td>
                                         <td class="align-middle">
                                         
-                                                <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="View user" style="margin-right: 10px;">
+                                                <a href="" class="btn btn-success">
                                                     View
                                                 </a>
-                                                <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user" style="margin-right: 10px;">
+                                                <a href="" class="btn btn-info">
                                                     Edit
                                                 </a>
-                                                <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
+                                                <a href="" class="btn btn-danger">
                                                    Delete
                                                 </a>
                                         </td>
@@ -74,6 +78,68 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addTeacherLabel">Add New Teacher</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addTeacherForm" method="POST" action="{{ route('teachers.store') }}">
+                    @csrf
+                    <!-- Name Field -->
+                    <div class="mb-3">
+                        <label for="teacherName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="teacherName" name="name" required>
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="mb-3">
+                        <label for="teacherEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="teacherEmail" name="email" required>
+                    </div>
+
+                    <!-- Gender Field -->
+                    <div class="mb-3">
+                        <label for="teacherGender" class="form-label">Gender</label>
+                        <select class="form-control" id="teacherGender" name="gender" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+
+                    <!-- Contact Number Field -->
+                    <div class="mb-3">
+                        <label for="teacherContact" class="form-label">Contact Number</label>
+                        <input type="text" class="form-control" id="teacherContact" name="contact_number" required>
+                    </div>
+
+                    <!-- Designation Field -->
+                    <div class="mb-3">
+                        <label for="teacherDesignation" class="form-label">Designation</label>
+                        <input type="text" class="form-control" id="teacherDesignation" name="designation" required>
+                    </div>
+
+                    <!-- Subjects Taught Field (Dropdown) -->
+
+                    <!-- Assigned Class Field -->
+                    <div class="mb-3">
+                        <label for="assignedClass" class="form-label">Assigned Class</label>
+                        <input type="text" class="form-control" id="assignedClass" name="assigned_class" required>
+                    </div>
+
+                    <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
         
         @include('layouts.footers.auth.footer')
     </div>

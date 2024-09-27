@@ -40,34 +40,31 @@ class TeacherController extends AppBaseController
      */
     public function create()
     {
-        return view('teachers.create');
+        return view('pages.teachers. add-teacher');
     }
 
     /**
      * Store a newly created Teacher in storage.
      */
-    public function store(CreateTeacherRequest $request)
-    {
-        // $input = $request->all();
-
-        // $teacher = $this->teacherRepository->create($input);
-
-        // Flash::success('Teacher saved successfully.');
-
-        // return redirect(route('teachers.index'));
-        // Define validation rules
-        $validated = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email',
-            'gender' => 'required|string',
-            'contact_number' => 'required|string',
-            'designation' => 'required|string',
-        ]);
     
-        Teacher::create($validated);
-    
-        return response()->json(['success' => 'Teacher added successfully!']);
-    }
+     public function store(Request $request)
+     {
+         $validatedData = $request->validate([
+             'name' => 'required|string|max:255',
+             'email' => 'required|email|unique:teachers,email',
+             'gender' => 'required|string',
+             'contact_number' => 'required|string|max:15',
+             'designation' => 'required|string|max:255',
+             'assigned_class' => 'required|string|max:255',
+         ]);
+ 
+         $teacher = Teacher::create($validatedData);
+ 
+        //  return response()->json($teacher, 201);
+        return redirect()->route('teachers.index')->with('success', 'Teacher updated successfully');
+     }
+
+
 
     /**
      * Display the specified Teacher.
