@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
@@ -26,7 +23,11 @@ use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;  
 use App\Http\Controllers\TeacherController;  
 use App\Http\Controllers\StudentController;  
-use App\Http\controllers\PdfController;
+use App\Http\Controllers\PdfController;
+use App\Exports\StudentExport;
+use App\Exports\ClasssController;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\MpesaSTKPUSHController;
 
             
 
@@ -34,6 +35,8 @@ use App\Http\controllers\PdfController;
 Route::get('/students', [StudentController::class, 'index'])->name('students.index');
 // Show the form for creating a new student
 Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
+
+Route::resource('students', StudentController::class);
 
 // Store a newly created student
 Route::post('/students/store', [StudentController::class, 'store'])->name('students.store');
@@ -50,13 +53,33 @@ Route::put('/students/{id}', [StudentController::class, 'update'])->name('studen
 // Delete a student (optional)
 Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
 
+
 Route::get('/teachers', [TeacherController::class, 'index'])->name('teachers.index');
 
 Route::post('/teachers/store', [TeacherController::class, 'store'])->name('teachers.store');
 
+Route::resource('teachers', TeacherController::class);
+//class
+
+Route::post('/classes/store', [ClasssController::class, 'store'])->name('classes.store');
+
+
+Route::get('/teachers/{id}', [TeacherController::class, 'show'])->name('teachers.show');
+
+
 Route::get('generate-pdf',[PdfController::class, 'index']);
 
+Route::get('download', function(){
+    return Excel::download(new StudentExport, 'students.xlsx');
+});
 
+Route::get('generate-pdf', [PdfController::class, 'index'])->name('students.pdf');
+
+Route::get('teacher-pdf', [PdfController::class, 'teacherp'])->name('teachers.pdf');
+
+Route::post('/v1/mpesatest/stk/push', [MpesaSTKPUSHController::class, 'STKPush']);
+
+Route::post('v1/confirm', [MpesaSTKPUSHController::class, 'STKConfirm'])->name('mpesa.confirm');
 
 Route::get('/', function () {return redirect('/dashboard');})->middleware('auth');
 	Route::get('/register', [RegisterController::class, 'create'])->middleware('guest')->name('register');

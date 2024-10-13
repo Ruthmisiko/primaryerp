@@ -4,16 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class Class extends Model
 {
-    public $table = 'students';
+    public $table = 'classes';
 
     public $fillable = [
-        'name',
-        'class',
-        'parent',
-        'age',
-
+        
     ];
 
     protected $casts = [
@@ -24,5 +20,5 @@ class Student extends Model
         
     ];
 
-        
+    
 }

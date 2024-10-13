@@ -13,7 +13,7 @@ class StudentController extends Controller
     public function index()
     {
         // Retrieve all students from the database
-        $students = Student::all();
+        $students = Student::paginate(10);
 
         $totalStudents = $students->count();
         

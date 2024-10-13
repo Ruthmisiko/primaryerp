@@ -9,9 +9,18 @@
                     <div class="card-header pb-0">
                         <h6>Students table</h6>
                     </div>
+                    
+                        
                     <!-- Add New Button to Trigger Modal -->
                     <div class="add" style="display: flex; align-items: center;">
-                        <button type="button" class="btn btn-success" style=" margin-left: 90%;" data-bs-toggle="modal" data-bs-target="#addStudentModal">Add New</button>
+                       <a href="{{ url('download') }}" class="btn btn-primary" style="margin-right: 15px; margin-left: 3%;"> <!-- Added margin-right -->
+                            Download Excel
+                        </a>
+                        <a href="{{ route('students.pdf') }}" class="btn btn-primary">
+                            Download PDF
+                        </a>
+
+                        <button type="button" class="btn btn-success" style=" margin-left: 70%;" data-bs-toggle="modal" data-bs-target="#addStudentModal">Add New</button>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -62,7 +71,7 @@
                                         </td>
                                         <td class="align-middle">
                                         
-                                            <a href="{{ route('students.show', $student->id) }}" class="btn btn-success">
+                                            <a href="{{ route('students.show', $student->id) }}" class="btn btn-success"style=" margin-left: 30%;">
                                                 View
                                             </a>
                                             <a href="" class="btn btn-info">
@@ -75,6 +84,13 @@
                                 @endforeach
                                 </tbody>
                             </table>
+
+                            {{-- Pagination --}}
+            <div class="d-flex justify-content-center">
+                {!! $students->links() !!}
+
+
+
                         </div>
                     </div>
                 </div>

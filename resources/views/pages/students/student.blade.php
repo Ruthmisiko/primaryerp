@@ -4,45 +4,58 @@
     @include('layouts.navbars.auth.topnav', ['title' => 'Student Details'])
 
     <div class="container-fluid py-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="card mb-4">
-                    <div class="card-header pb-0" style="background-color: #f8f9fa;">
-                        <h6 style="color: #333;">Student Details</h6>
-                    </div>
-                    <div class="card-body px-0 pt-0 pb-2">
-                        <div class="table-responsive p-4">
-                            <table class="table table-bordered align-items-center mb-0" style="background-color: #fff; border-color: #dee2e6;">
-                                <tbody>
-                                    <tr>
-                                        <th style="background-color: #f2f2f2; color: #555; padding: 10px;" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                                        <td style="padding: 10px;">
-                                            <h6 class="mb-0 text-sm">{{ $student->name }}</h6>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th style="background-color: #f2f2f2; color: #555; padding: 10px;" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Class</th>
-                                        <td style="padding: 10px;">
-                                            <p class="text-xs font-weight-bold mb-0">{{ $student->class }}</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th style="background-color: #f2f2f2; color: #555; padding: 10px;" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Parent</th>
-                                        <td style="padding: 10px;">
-                                            <p class="text-xs font-weight-bold mb-0">{{ $student->parent }}</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th style="background-color: #f2f2f2; color: #555; padding: 10px;" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Age</th>
-                                        <td style="padding: 10px;">
-                                            <p class="text-xs font-weight-bold mb-0">{{ $student->age }}</p>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+        
+        <div class="col-md-4">
+                <div class="card card-profile">
+                    <img src="/img/bg-profile.jpg" alt="Image placeholder" class="card-img-top">
+                    <div class="row justify-content-center">
+                        <div class="col-4 col-lg-4 order-lg-2">
+                            <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
+                                <a href="javascript:;">
+                                    <img src="/img/team-2.jpg"
+                                        class="rounded-circle img-fluid border border-2 border-white">
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-footer" style="background-color: #f8f9fa; padding: 15px;">
+                    <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
+                        <div class="d-flex justify-content-between">
+                        <a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning" style="margin-right: 10px;">
+                            Edit
+                        </a>
+                            <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-block d-lg-none"><i
+                                    class="ni ni-collection"></i></a>
+                                    <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-inline-block" style="margin-right: 10px;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">
+                                Delete
+                            </button>
+                        </form>
+                            <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none"><i
+                                    class="ni ni-email-83"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="row">
+                            <div class="col">
+                                
+                            </div>
+                        </div>
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <p><strong>Name:</strong> {{ $student->name }}</p>
+                            <p><strong>Class:</strong> {{ $student->class }}</p>
+                            <p><strong>Parent:</strong> {{ $student->parent }}</p>
+                            <p><strong>Age:</strong> {{ $student->age }}</p>
+                            <p><strong>Fee Balance:</strong> {{ $student->fee_balance }}</p>
+                        </div>
+                       
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer" style="background-color: #f8f9fa; padding: 15px;">
                         <a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning" style="margin-right: 10px;">
                             Edit
                         </a>
@@ -54,10 +67,7 @@
                             </button>
                         </form>
                         <a href="{{ route('students.index') }}" class="btn btn-secondary">Back to Students</a>
-                    </div>
-                </div>
             </div>
-        </div>
 
         @include('layouts.footers.auth.footer')
     </div>

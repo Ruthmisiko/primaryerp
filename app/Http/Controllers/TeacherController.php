@@ -29,7 +29,7 @@ class TeacherController extends AppBaseController
         // return view('teachers.index')
         //     ->with('teachers', $teachers);
 
-          $teachers = Teacher::all();
+          $teachers = Teacher::paginate(10);
 
         return view('pages.teachers.teachers', compact('teachers'));     
 
@@ -69,19 +69,26 @@ class TeacherController extends AppBaseController
     /**
      * Display the specified Teacher.
      */
+    // public function show($id)
+    // {
+    //     $teacher = $this->teacherRepository->find($id);
+
+    //     if (empty($teacher)) {
+    //         Flash::error('Teacher not found');
+
+    //         return redirect(route('teachers.index'));
+    //     }
+
+    //     return view('teachers.show')->with('teacher', $teacher);
+    // }
     public function show($id)
-    {
-        $teacher = $this->teacherRepository->find($id);
+        {
+            // Find the teacher by ID using the repository
+            $teacher = $this->teacherRepository->find($id);
 
-        if (empty($teacher)) {
-            Flash::error('Teacher not found');
-
-            return redirect(route('teachers.index'));
+                      // Return the 'show-teacher' blade view and pass the teacher data
+            return view('pages.teachers.showteacher', compact('teacher'));
         }
-
-        return view('teachers.show')->with('teacher', $teacher);
-    }
-
     /**
      * Show the form for editing the specified Teacher.
      */
@@ -126,17 +133,16 @@ class TeacherController extends AppBaseController
     public function destroy($id)
     {
         $teacher = $this->teacherRepository->find($id);
-
+    
         if (empty($teacher)) {
             Flash::error('Teacher not found');
-
-            return redirect(route('teachers.index'));
+            return redirect()->route('teachers.index');
         }
-
+    
         $this->teacherRepository->delete($id);
-
         Flash::success('Teacher deleted successfully.');
-
-        return redirect(route('teachers.index'));
+    
+        // Redirect to the teachers.index route to fetch the updated list
+        return redirect()->route('teachers.index');
     }
-}
+}    

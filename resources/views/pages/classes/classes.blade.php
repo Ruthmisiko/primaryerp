@@ -11,10 +11,7 @@
                     </div>
                      <!-- Add New Button to Trigger Modal -->
                      <div class="add" style="display: flex; align-items: center;">
-                     <a href="{{ route('teachers.pdf') }}" class="btn btn-primary" style=" margin-left: 3%;">
-                            Download PDF
-                        </a>
-                        <button type="button" class="btn btn-success" style=" margin-left: 75%;" data-bs-toggle="modal" data-bs-target="#addTeacherModal">Add New</button>
+                     
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -24,18 +21,15 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             NAME</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            GENDER</th>
+                                            STUDENTS</th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            CONTACT NUMBER</th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            DESIGNTATION</th>
-                                        <th class="text-secondary opacity-7"></th>
+                                            CLASS TEACHER</th>
+                                    
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($teachers as $teacher)
+                                @foreach ($classes as $class)
                                     <tr>
                                         <td>
                                             <div class="d-flex px-2 py-1">
