@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\Classs;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -16,10 +17,10 @@ class StudentController extends Controller
         $students = Student::paginate(10);
 
         $totalStudents = $students->count();
-        
+        $classes = Classs::all();  
 
         // Return the view with the students data
-        return view('pages.students.students', compact('students'));
+        return view('pages.students.students', compact('students','classes'));
     }
 
     /**
@@ -30,7 +31,7 @@ class StudentController extends Controller
         // Validate the incoming request data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'class' => 'required|string|max:255',
+            'class_id' => 'required|exists:classses,id',
             'parent' => 'required|string|max:255',
             'age' => 'required|integer|min:1|max:100',
         ]);
@@ -38,7 +39,7 @@ class StudentController extends Controller
         // Create new student entry
         Student::create([
             'name' => $validatedData['name'],
-            'class' => $validatedData['class'],
+            'class_id' => $validatedData['class_id'], 
             'parent' => $validatedData['parent'],
             'age' => $validatedData['age'],
         ]);
@@ -59,6 +60,15 @@ class StudentController extends Controller
         return view('pages.students.student', compact('student'));
     }
 
+
+    public function edit($id)
+        {
+            // Find the student by id
+            $student = Student::findOrFail($id);
+
+            // Return the view to edit the student's details
+            return view('pages.students.edit', compact('student'));
+        }
     /**
      * Update the specified student in storage.
      */

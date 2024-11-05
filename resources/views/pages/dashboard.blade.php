@@ -79,13 +79,11 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Sales</p>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">CLASSES</p>
                                     <h5 class="font-weight-bolder">
-                                        $103,430
+                                       {{ $totalClasses }}
                                     </h5>
-                                    <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+5%</span> than last month
-                                    </p>
+                                    
                                 </div>
                             </div>
                             <div class="col-4 text-end">

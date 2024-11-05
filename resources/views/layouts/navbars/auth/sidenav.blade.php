@@ -43,7 +43,7 @@
             </li>
 
             <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('teachers.index') ? 'active' : '' }}" href="{{ route('teachers.index') }}">
+            <a class="nav-link {{ request()->routeIs('classs.index') ? 'active' : '' }}" href="{{ route('classs.index') }}">
 
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">

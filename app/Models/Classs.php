@@ -10,7 +10,7 @@ class Classs extends Model
 
     public $fillable = [
         'name',
-        'teacher',
+        'teachers',
         'students'   
     ];
     protected $casts = [
@@ -20,6 +20,9 @@ class Classs extends Model
     public static array $rules = [
         
     ];
-
+    public function students()
+    {
+        return $this->hasMany(Student::class, 'class_id');
+    }
     
 }

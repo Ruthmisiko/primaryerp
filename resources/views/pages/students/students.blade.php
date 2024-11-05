@@ -20,7 +20,7 @@
                             Download PDF
                         </a>
 
-                        <button type="button" class="btn btn-success" style=" margin-left: 70%;" data-bs-toggle="modal" data-bs-target="#addStudentModal">Add New</button>
+                        <button type="button" class="btn btn-success" style=" margin-left: 65%;" data-bs-toggle="modal" data-bs-target="#addStudentModal">Add New</button>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -34,8 +34,7 @@
                                             CLASS</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             PARENT</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            PARENT</th>
+                                           
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                            AGE</th>
                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -60,10 +59,7 @@
                                         <td class="align-middle text-center text-sm">
                                             <span class="text-secondary text-xs font-weight-bold">{{$student->parent}}</span>
                                         </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="text-secondary text-xs font-weight-bold">{{$student->parent}}</span>
-                                        </td>
-                                        <td class="align-middle text-center">
+                                                                                <td class="align-middle text-center">
                                             <span class="text-secondary text-xs font-weight-bold">{{$student->age}}</span>
                                         </td>
                                         <td class="align-middle text-center">
@@ -74,7 +70,7 @@
                                             <a href="{{ route('students.show', $student->id) }}" class="btn btn-success"style=" margin-left: 30%;">
                                                 View
                                             </a>
-                                            <a href="" class="btn btn-info">
+                                            <a href="{{ route('students.edit', $student->id) }}" class="btn btn-info">
                                                 Edit
                                             </a>
                                             <a href="" class="btn btn-danger">Delete</a>
@@ -115,9 +111,14 @@
                                 <input type="text" class="form-control" id="name" name="name" required>
                             </div>
                             <div class="mb-3">
-                                <label for="class" class="form-label">Class</label>
-                                <input type="text" class="form-control" id="class" name="class" required>
-                            </div>
+                        <label for="class_id" class="form-label">Class</label>
+                        <select class="form-control" id="class_id" name="class_id" required>
+                            <option value="">Select Class</option>
+                            @foreach ($classes as $class)
+                                <option value="{{ $class->id }}">{{ $class->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                             <div class="mb-3">
                                 <label for="parent" class="form-label">Parent</label>
                                 <input type="text" class="form-control" id="parent" name="parent" required>

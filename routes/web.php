@@ -25,7 +25,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;  
 use App\Http\Controllers\PdfController;
 use App\Exports\StudentExport;
-use App\Exports\ClasssController;
+use App\Http\Controllers\ClasssController;  
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\MpesaSTKPUSHController;
 
@@ -41,16 +41,15 @@ Route::resource('students', StudentController::class);
 // Store a newly created student
 Route::post('/students/store', [StudentController::class, 'store'])->name('students.store');
 
-// Show a specific student (optional, if you have a detailed view for students)
-Route::get('/students/{id}', [StudentController::class, 'show'])->name('students.show');
-
 // Edit a student (optional, if editing is implemented)
-Route::get('/students/{id}/edit', [StudentController::class, 'edit'])->name('students.edit');
 
-// Update a student's information (optional)
+Route::get('students/{id}/edit', [StudentController::class, 'edit'])->name('students.edit');
+
+// In routes/web.php
+Route::put('students/{id}', [StudentController::class, 'update'])->name('students.update');
+
 Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
 
-// Delete a student (optional)
 Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
 
 
@@ -59,12 +58,16 @@ Route::get('/teachers', [TeacherController::class, 'index'])->name('teachers.ind
 Route::post('/teachers/store', [TeacherController::class, 'store'])->name('teachers.store');
 
 Route::resource('teachers', TeacherController::class);
-//class
+
+Route::get('/teachers/{id}', [TeacherController::class, 'show'])->name('teachers.show');
+//class routes
+
+Route::get('/classses', [ClasssController::class, 'index'])->name('classs.index');
 
 Route::post('/classes/store', [ClasssController::class, 'store'])->name('classes.store');
 
 
-Route::get('/teachers/{id}', [TeacherController::class, 'show'])->name('teachers.show');
+
 
 
 Route::get('generate-pdf',[PdfController::class, 'index']);

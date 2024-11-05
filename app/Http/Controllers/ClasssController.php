@@ -26,7 +26,7 @@ class ClasssController extends AppBaseController
     {
         $classses = $this->classsRepository->paginate(10);
 
-        return view('pages.classes.classes', compact('teachers'));     
+        return view('pages.classes.classses', compact('classses'));     
 
     }
 
@@ -35,7 +35,7 @@ class ClasssController extends AppBaseController
      */
     public function create()
     {
-        return view('pages.classes. add-class');
+        return view('pages.classes.add-class');
     }
 
     /**

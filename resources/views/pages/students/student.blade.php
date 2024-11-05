@@ -56,7 +56,7 @@
                 </div>
             </div>
             <div class="card-footer" style="background-color: #f8f9fa; padding: 15px;">
-                        <a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning" style="margin-right: 10px;">
+                        <!-- <a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning" style="margin-right: 10px;">
                             Edit
                         </a>
                         <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-inline-block" style="margin-right: 10px;">
@@ -64,7 +64,7 @@
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">
                                 Delete
-                            </button>
+                            </button> -->
                         </form>
                         <a href="{{ route('students.index') }}" class="btn btn-secondary">Back to Students</a>
             </div>

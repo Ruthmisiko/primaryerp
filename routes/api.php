@@ -24,3 +24,4 @@ Route::resource('teachers', App\Http\Controllers\API\TeacherAPIController::class
 
 Route::resource('students', App\Http\Controllers\API\StudentAPIController::class)
     ->except(['create', 'edit']);
+
