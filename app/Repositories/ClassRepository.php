@@ -18,6 +18,6 @@ class ClassRepository extends BaseRepository
 
     public function model(): string
     {
-        return Class::class;
+        return Classs::class;
     }
 }

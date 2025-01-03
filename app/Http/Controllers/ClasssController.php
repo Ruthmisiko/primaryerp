@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateClasssRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\ClasssRepository;
 use Illuminate\Http\Request;
+use App\Models\Classs;
+use App\Models\Teacher;
 use Flash;
 
 class ClasssController extends AppBaseController
@@ -24,10 +26,13 @@ class ClasssController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $classses = $this->classsRepository->paginate(10);
+        $classses = Classs::paginate(10);
 
-        return view('pages.classes.classses', compact('classses'));     
+        $teachers = Teacher:: all();
 
+        return view('pages.classes.classses', compact('classses','teachers'));    
+        
+       
     }
 
     /**
@@ -43,47 +48,62 @@ class ClasssController extends AppBaseController
      */
     public function store(Request $request)
     {
+        // Validate the incoming request
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'teacher' => 'required|string',
+            'teacher' => 'required|exists:teachers,id',  // Ensure a valid teacher is selected
+            'students' => 'required|integer|min:1',     // Ensure students is a positive integer
         ]);
-
-        $classs = Classs::create($validatedData);
-
-       //  return response()->json($teacher, 201);
-       return redirect()->route('classs.index')->with('success', 'Class updated successfully');
+    
+        // Create new class entry
+        Classs::create([
+            'name' => $validatedData['name'],
+            'teachers' => $validatedData['teacher'],  // Storing the teacher ID
+            'students' => $validatedData['students'], // Storing the student count
+        ]);
+    
+        // Redirect to class list with a success message
+        return redirect()->route('classs.index')->with('success', 'Class added successfully');
     }
+    
     /**
      * Display the specified Classs.
      */
+    // public function show($id)
+    // {
+    //     $classs = Classs::with('students')->find($id);
+
+    //     return view('pages.classes.view', compact('classs'));
+    // }
     public function show($id)
     {
-        $classs = $this->classsRepository->find($id);
-
-        if (empty($classs)) {
-            Flash::error('Classs not found');
-
-            return redirect(route('classses.index'));
-        }
-
-        return view('classses.show')->with('classs', $classs);
+        // Eager load students when fetching the class by id
+        $class = Classs::with('students')->findOrFail($id);
+    
+           
+        return view('pages.classes.view', compact('class'));
     }
+    
 
+    
     /**
      * Show the form for editing the specified Classs.
      */
     public function edit($id)
     {
         $classs = $this->classsRepository->find($id);
-
+    
         if (empty($classs)) {
-            Flash::error('Classs not found');
-
-            return redirect(route('classses.index'));
+            Flash::error('Class not found');
+            return redirect(route('classs.index'));
         }
-
-        return view('classses.edit')->with('classs', $classs);
+    
+        // Retrieve all teachers for the dropdown
+        $teachers = Teacher::all();
+    
+        return view('pages.classes.edit', compact('classs', 'teachers'));
     }
+    
 
     /**
      * Update the specified Classs in storage.
@@ -91,19 +111,30 @@ class ClasssController extends AppBaseController
     public function update($id, UpdateClasssRequest $request)
     {
         $classs = $this->classsRepository->find($id);
-
+    
         if (empty($classs)) {
-            Flash::error('Classs not found');
-
-            return redirect(route('classses.index'));
+            Flash::error('Class not found');
+            return redirect(route('classs.index'));
         }
-
-        $classs = $this->classsRepository->update($request->all(), $id);
-
-        Flash::success('Classs updated successfully.');
-
-        return redirect(route('classses.index'));
+    
+        // Validate the incoming request
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'teacher' => 'required|exists:teachers,id',
+            'students' => 'required|integer|min:1',
+        ]);
+    
+        // Update the class data
+        $classs->update([
+            'name' => $validatedData['name'],
+            'teachers' => $validatedData['teacher'],
+            'students' => $validatedData['students'],
+        ]);
+    
+        Flash::success('Class updated successfully.');
+        return redirect(route('classs.index'));
     }
+    
 
     /**
      * Remove the specified Classs from storage.

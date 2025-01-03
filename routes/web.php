@@ -26,6 +26,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\PdfController;
 use App\Exports\StudentExport;
 use App\Http\Controllers\ClasssController;  
+use App\Http\Controllers\ReportController;  
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\MpesaSTKPUSHController;
 
@@ -46,11 +47,13 @@ Route::post('/students/store', [StudentController::class, 'store'])->name('stude
 Route::get('students/{id}/edit', [StudentController::class, 'edit'])->name('students.edit');
 
 // In routes/web.php
-Route::put('students/{id}', [StudentController::class, 'update'])->name('students.update');
+
+Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
+
+Route::get('/students/{id}/edit', [StudentController::class, 'edit'])->name('students.edit');
 
 Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
 
-Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
 
 
 Route::get('/teachers', [TeacherController::class, 'index'])->name('teachers.index');
@@ -60,11 +63,34 @@ Route::post('/teachers/store', [TeacherController::class, 'store'])->name('teach
 Route::resource('teachers', TeacherController::class);
 
 Route::get('/teachers/{id}', [TeacherController::class, 'show'])->name('teachers.show');
-//class routes
 
+Route::get('/teachers/{id}/edit', [TeacherController::class, 'edit'])->name('teachers.edit');
+
+Route::put('/teachers/{id}', [TeacherController::class, 'update'])->name('teachers.update');
+
+
+//class routes
 Route::get('/classses', [ClasssController::class, 'index'])->name('classs.index');
 
-Route::post('/classes/store', [ClasssController::class, 'store'])->name('classes.store');
+Route::get('/classses/{id}', [ClasssController::class, 'show'])->name('classs.show');
+
+Route::post('/classes/store', [ClasssController::class, 'store'])->name('classs.store');
+
+Route::resource('classs', ClasssController::class);
+
+
+// Edit Class Route
+Route::get('/classs/{id}/edit', [ClasssController::class, 'edit'])->name('classs.edit');
+
+// Update Class Route
+Route::put('/classs/{id}', [ClasssController::class, 'update'])->name('classs.update');
+
+//report routes
+Route::get('/reports',[ReportController::class, 'index'])->name('reports.index');
+
+Route::post('/reports/store', [ReportController::class, 'store'])->name('reports.store');
+
+Route::get('/reports/{id}', [ReportController::class, 'show'])->name('reports.show');
 
 
 

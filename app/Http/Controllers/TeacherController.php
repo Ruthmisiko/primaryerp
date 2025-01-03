@@ -92,39 +92,54 @@ class TeacherController extends AppBaseController
     /**
      * Show the form for editing the specified Teacher.
      */
+    // public function edit($id)
+    // {
+    //     $teacher = $this->teacherRepository->find($id);
+
+    //     if (empty($teacher)) {
+    //         Flash::error('Teacher not found');
+
+    //         return redirect(route('teachers.index'));
+    //     }
+
+    //     return view('teachers.edit')->with('teacher', $teacher);
+    // }
     public function edit($id)
     {
-        $teacher = $this->teacherRepository->find($id);
-
-        if (empty($teacher)) {
-            Flash::error('Teacher not found');
-
-            return redirect(route('teachers.index'));
+        $teacher = Teacher::find($id);
+    
+        if (!$teacher) {
+            return redirect()->route('teachers.index')->with('error', 'Teacher not found.');
         }
-
-        return view('teachers.edit')->with('teacher', $teacher);
+    
+        return view('pages.teachers.edit-teacher', compact('teacher'));
     }
-
+    
     /**
      * Update the specified Teacher in storage.
      */
-    public function update($id, UpdateTeacherRequest $request)
+    public function update(Request $request, $id)
     {
-        $teacher = $this->teacherRepository->find($id);
-
-        if (empty($teacher)) {
-            Flash::error('Teacher not found');
-
-            return redirect(route('teachers.index'));
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:teachers,email,' . $id, // Exclude current record from unique check
+            'gender' => 'required|string',
+            'contact_number' => 'required|string|max:15',
+            'designation' => 'required|string|max:255',
+            'assigned_class' => 'required|string|max:255',
+        ]);
+    
+        $teacher = Teacher::find($id);
+    
+        if (!$teacher) {
+            return redirect()->route('teachers.index')->with('error', 'Teacher not found.');
         }
-
-        $teacher = $this->teacherRepository->update($request->all(), $id);
-
-        Flash::success('Teacher updated successfully.');
-
-        return redirect(route('teachers.index'));
+    
+        $teacher->update($validatedData);
+    
+        return redirect()->route('teachers.index')->with('success', 'Teacher updated successfully.');
     }
-
+    
     /**
      * Remove the specified Teacher from storage.
      *

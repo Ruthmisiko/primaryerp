@@ -26,7 +26,7 @@
 
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fas fa-users text-warning text-sm opacity-10"></i> 
+                        <ion-icon name="book"></ion-icon>
                     </div>
                     <span class="nav-link-text ms-1">Teachers</span>
                 </a>
@@ -47,17 +47,17 @@
 
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa fa-cc" aria-hidden="true"></i>
+                        <ion-icon name="podium"></ion-icon>
                     </div>
                     <span class="nav-link-text ms-1">Classes</span>
                 </a>
             </li>
             <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('teachers.index') ? 'active' : '' }}" href="{{ route('teachers.index') }}">
+            <a class="nav-link {{ request()->routeIs('reports.index') ? 'active' : '' }}" href="{{ route('reports.index') }}">
 
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                        <ion-icon name="receipt"></ion-icon>
                     </div>
                     <span class="nav-link-text ms-1">Reports</span>
                 </a>

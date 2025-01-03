@@ -29,7 +29,9 @@ class HomeController extends Controller
         $totalStudents = Student::count();
         $totalTeachers = Teacher::count();
         $totalClasses = Classs::count();
+        $classes = Classs::all(); 
+        $students = Student::all();
 
-        return view('pages.dashboard',  compact('totalStudents','totalTeachers', 'totalClasses'));
+        return view('pages.dashboard',  compact('totalStudents','totalTeachers', 'totalClasses', 'classes', 'students'));
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\Classs;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,7 +11,7 @@ class Student extends Model
 
     public $fillable = [
         'name',
-        'class',
+        'class_id',
         'parent',
         'age',
 
@@ -23,6 +24,10 @@ class Student extends Model
     public static array $rules = [
         
     ];
+    public function class()
+{
+    return $this->belongsTo(Classs::class, 'class_id');
+}
 
         
 }

@@ -4,13 +4,12 @@
     @include('layouts.navbars.auth.topnav', ['title' => 'Students'])
     <div class="container-fluid py-4">
         <div class="row">
-            <div class="col-12">
+            <div class="col-10">
                 <div class="card mb-4">
                     <div class="card-header pb-0">
-                        <h6>Students table</h6>
+                        <h6>Exam Categories</h6>
                     </div>
-                    
-                        
+                                            
                     <!-- Add New Button to Trigger Modal -->
                     <div class="add" style="display: flex; align-items: center;">
                        <a href="{{ url('download') }}" class="btn btn-primary" style="margin-right: 15px; margin-left: 3%;"> <!-- Added margin-right -->
@@ -30,48 +29,46 @@
                                     
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             NAME</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            CATEGORY</th>   
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            CLASS</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            PARENT</th>
-                                           
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                           AGE</th>
-                                           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                           AGE</th>
-                                        <th class="text-secondary opacity-7"></th>
+                                            YEAR</th>                                       
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($students as $student)
+                                @foreach ($exams as $exam)
                                     <tr>
                                     
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm"> {{ $student->name }}</h6>
+                                                    <h6 class="mb-0 text-sm">{{$exam->name}}</h6>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $student->class->name }}</p>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">{{$exam->category}}</h6>
+                                                </div>
+                                            </div>
                                         </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="text-secondary text-xs font-weight-bold">{{$student->parent}}</span>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">{{$exam->year}}</h6>
+                                                </div>
+                                            </div>
                                         </td>
-                                                                                <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">{{$student->age}}</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">{{$student->age}}</span>
-                                        </td>
+                                              
                                         <td class="align-middle">
                                         
-                                            <a href="{{ route('students.show', $student->id) }}" class="btn btn-success"style=" margin-left: 30%;">
+                                            <a href="{{ route('reports.show', $exam->id) }}" class="btn btn-success"style=" margin-left: 30%;">
                                                 View
                                             </a>
-                                            <a href="{{ route('students.edit', $student->id) }}" class="btn btn-info">Edit</a>
-
+                                            <a href=" " class="btn btn-info">
+                                                Edit
+                                            </a>
                                             <a href="" class="btn btn-danger">Delete</a>
                                       </td>
                                         
@@ -81,10 +78,8 @@
                             </table>
 
                             {{-- Pagination --}}
-            <div class="d-flex justify-content-center">
-                {!! $students->links() !!}
-
-
+                            <div class="d-flex justify-content-center">
+                                {!! $exams->links() !!}         
 
                         </div>
                     </div>
@@ -97,38 +92,30 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addStudentModalLabel">Add New Student</h5>
+                        <h5 class="modal-title" id="addStudentModalLabel">Add New category</h5>
                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('students.store') }}" method="POST">
+                        <form action="{{ route('reports.store') }}" method="POST">
                             @csrf
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
                                 <input type="text" class="form-control" id="name" name="name" required>
                             </div>
                             <div class="mb-3">
-                        <label for="class_id" class="form-label">Class</label>
-                        <select class="form-control" id="class_id" name="class_id" required>
-                            <option value="">Select Class</option>
-                            @foreach ($classes as $class)
-                                <option value="{{ $class->id }}">{{ $class->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                            <div class="mb-3">
-                                <label for="parent" class="form-label">Parent</label>
-                                <input type="text" class="form-control" id="parent" name="parent" required>
+                                <label for="class_id" class="form-label">Category</label>  
+                                <input type="text" class="form-control" id="category" name="category" required>                    
                             </div>
                             <div class="mb-3">
-                                <label for="age" class="form-label">Age</label>
-                                <input type="number" class="form-control" id="age" name="age" required>
+                                <label for="class_id" class="form-label">Year</label> 
+                                <input type="text" class="form-control" id="year" name="year" required>                     
                             </div>
+                            
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save Student</button>
+                                <button type="submit" class="btn btn-primary">Save Exam</button>
                             </div>
                         </form>
                     </div>

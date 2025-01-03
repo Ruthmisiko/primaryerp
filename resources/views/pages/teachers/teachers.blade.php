@@ -63,14 +63,13 @@
                                         
                                         <a href="{{ route('teachers.show', $teacher->id) }}" class="btn btn-info">View</a>
 
-                                                <a href="" class="btn btn-info">
-                                                    Edit
-                                                </a>
-                                                <form action="{{ route('teachers.destroy', $teacher->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this teacher?');">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="btn btn-danger">Delete</button>
-    </form>
+                                        <a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-info">Edit</a>
+
+                                        <form action="{{ route('teachers.destroy', $teacher->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this teacher?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
                                         </td>
                                     </tr>
                                    

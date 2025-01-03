@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Models\Classs;
+
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -28,6 +29,7 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         // Validate the incoming request data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
@@ -62,35 +64,37 @@ class StudentController extends Controller
 
 
     public function edit($id)
-        {
-            // Find the student by id
-            $student = Student::findOrFail($id);
-
-            // Return the view to edit the student's details
-            return view('pages.students.edit', compact('student'));
-        }
-    /**
-     * Update the specified student in storage.
-     */
+    {
+        // Find the student by ID
+        $student = Student::findOrFail($id);
+    
+        // Fetch all classes for the dropdown
+        $classes = Classs::all();
+    
+        // Return the edit view
+        return view('pages.students.edit', compact('student', 'classes'));
+    }
+    
     public function update(Request $request, $id)
     {
         // Validate the incoming request data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'class' => 'required|string|max:255',
+            'class_id' => 'required|exists:classses,id', // Ensure the class ID is valid
             'parent' => 'required|string|max:255',
             'age' => 'required|integer|min:1|max:100',
         ]);
-
-        // Find the student by id
+    
+        // Find the student by ID
         $student = Student::findOrFail($id);
-
-        // Update the student's information in the database
+    
+        // Update the student's information
         $student->update($validatedData);
-
-        // Redirect back to the students index page with success message
+    
+        // Redirect back with a success message
         return redirect()->route('students.index')->with('success', 'Student updated successfully');
     }
+    
 
     /**
      * Remove the specified student from storage.

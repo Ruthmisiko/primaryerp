@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models;
+use App\Models\Student;
+use App\Models\Teacher;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +13,7 @@ class Classs extends Model
     public $fillable = [
         'name',
         'teachers',
-        'students'   
+        'students',
     ];
     protected $casts = [
         
@@ -22,7 +24,11 @@ class Classs extends Model
     ];
     public function students()
     {
-        return $this->hasMany(Student::class, 'class_id');
+        return $this->hasMany(Student::class, 'class_id'); // Ensure 'class_id' is the foreign key in the 'students' table
+    }
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class, 'teachers');
     }
     
 }

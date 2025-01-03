@@ -45,7 +45,8 @@
                         <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
                             <p><strong>Name:</strong> {{ $student->name }}</p>
-                            <p><strong>Class:</strong> {{ $student->class }}</p>
+                            <p><strong>Class:</strong> {{ $student->class->name }}</p>
+
                             <p><strong>Parent:</strong> {{ $student->parent }}</p>
                             <p><strong>Age:</strong> {{ $student->age }}</p>
                             <p><strong>Fee Balance:</strong> {{ $student->fee_balance }}</p>

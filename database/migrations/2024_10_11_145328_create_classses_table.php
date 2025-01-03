@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('classses', function (Blueprint $table) {
             $table->id('id');
             $table->string('name');
-            $table->string('teachers');
-            $table->integer('students');
+            $table->unsignedBigInteger('teachers'); // Match with teachers.id
+            $table->foreign('teachers')->references('id')->on('teachers')->onDelete('cascade');
             $table->timestamps();
         });
     }
