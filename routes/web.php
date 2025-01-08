@@ -29,6 +29,7 @@ use App\Http\Controllers\ClasssController;
 use App\Http\Controllers\ReportController;  
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\MpesaSTKPUSHController;
+use App\Http\Controllers\FileUploadController;
 
             
 
@@ -86,12 +87,16 @@ Route::get('/classs/{id}/edit', [ClasssController::class, 'edit'])->name('classs
 Route::put('/classs/{id}', [ClasssController::class, 'update'])->name('classs.update');
 
 //report routes
-Route::get('/reports',[ReportController::class, 'index'])->name('reports.index');
+Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 
 Route::post('/reports/store', [ReportController::class, 'store'])->name('reports.store');
 
 Route::get('/reports/{id}', [ReportController::class, 'show'])->name('reports.show');
 
+Route::resource('reports', ReportController::class);
+
+
+Route::post('/upload', [FileUploadController::class, 'upload'])->name('upload');
 
 
 
@@ -105,6 +110,8 @@ Route::get('download', function(){
 Route::get('generate-pdf', [PdfController::class, 'index'])->name('students.pdf');
 
 Route::get('teacher-pdf', [PdfController::class, 'teacherp'])->name('teachers.pdf');
+
+Route::get('reportt-pdf/{id}', [PdfController::class, 'reportp'])->name('reportt.pdf');
 
 Route::post('/v1/mpesatest/stk/push', [MpesaSTKPUSHController::class, 'STKPush']);
 

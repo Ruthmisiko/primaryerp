@@ -10,13 +10,16 @@ class Result extends Model
     public $table = 'results';
     
         public $fillable = [
-            'name',           
+            'name', 
+            'exam_id',          
             'kiswahili',
             'English',
             'Mathematics',
             'CRE',
             'Homescience',
-            'class'
+            'exam_id',
+            'class_id',
+                      
         ];
     
         protected $casts = [
@@ -26,4 +29,11 @@ class Result extends Model
         public static array $rules = [
             
         ];
+        public function exam()
+            {
+                return $this->belongsTo(Exam::class, 'exam_id');
+            }
+        public function class(){
+            return $this->belongsTo(classs::class, 'class_id');
+        }
 }

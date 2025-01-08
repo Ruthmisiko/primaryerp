@@ -16,7 +16,7 @@
                 <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}" href="{{ route('home') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                        <ion-icon name="bar-chart" style="color: #28a745"></ion-icon>
                     </div>
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
@@ -26,7 +26,7 @@
 
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <ion-icon name="book"></ion-icon>
+                        <ion-icon name="book" style="color: #28a745"></ion-icon>
                     </div>
                     <span class="nav-link-text ms-1">Teachers</span>
                 </a>
@@ -36,7 +36,7 @@
 
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                        <ion-icon name="people"style="color: #28a745"></ion-icon>
                     </div>
                     <span class="nav-link-text ms-1">Students</span>
                 </a>
@@ -47,7 +47,7 @@
 
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <ion-icon name="podium"></ion-icon>
+                        <ion-icon name="podium" style="color: #28a745"></ion-icon>
                     </div>
                     <span class="nav-link-text ms-1">Classes</span>
                 </a>
@@ -57,7 +57,7 @@
 
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <ion-icon name="receipt"></ion-icon>
+                        <ion-icon name="receipt" style="color: #28a745"></ion-icon>
                     </div>
                     <span class="nav-link-text ms-1">Reports</span>
                 </a>
@@ -68,7 +68,8 @@
                 <a class="nav-link {{ Route::currentRouteName() == 'profile' ? 'active' : '' }}" href="{{ route('profile') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+                        
+                        <ion-icon name="person-circle"style="color: #28a745;"></ion-icon>
                     </div>
                     <span class="nav-link-text ms-1">Profile</span>
                 </a>
@@ -76,14 +77,15 @@
             <li class="nav-item">
                 <a class="nav-link {{ str_contains(request()->url(), 'user-management') == true ? 'active' : '' }}" href="{{ route('page', ['page' => 'user-management']) }}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-bullet-list-67 text-dark text-sm opacity-10"></i>
+                        <ion-icon name="reorder-four" style="color: #28a745; font-size:2rem;"></ion-icon>
+
                     </div>
                     <span class="nav-link-text ms-1">User Management</span>
                 </a>
             </li>
            
             
-            <li class="nav-item mt-3">
+            {{-- <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
             </li>
             <li class="nav-item">
@@ -112,7 +114,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Sign Up</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>
     </div>
    

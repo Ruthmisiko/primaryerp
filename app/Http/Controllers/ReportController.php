@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Exam;
 use App\Models\Result;
+use App\Models\Classs;
 
 use Illuminate\Http\Request;
 
@@ -45,15 +46,57 @@ class ReportController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, Request $request)
     {
         $exam = Exam::findOrFail($id);
 
-        $result = Result::all();
+       // Start the query to fetch results
+    $resultQuery = Result::where('exam_id', $id);
 
-        return view ('pages.reports.exam', compact('exam','result'));
+    // Check if class_id is passed in the request and filter the results
+    if ($request->has('class_id') && $request->class_id != '') {
+        $resultQuery->where('class_id', $request->class_id);
     }
 
+    // Check if student_name is passed in the request and filter the results
+    if ($request->has('name') && $request->name != '') {
+        $resultQuery->where('name', 'like', '%' . $request->name . '%');
+    }
+
+    // Execute the query to get the filtered results
+    $result = $resultQuery->paginate(10);
+
+        $classes = Classs::all();
+
+
+        return view ('pages.reports.exam', compact('exam','result','classes'));
+    }
+    // public function search(Request $request)
+    // {
+    //     // Validate input (optional)
+    //     $request->validate([
+    //         'class_id' => 'nullable|exists:classes,id',
+    //         'name' => 'nullable|string|max:255',
+    //     ]);
+    
+    //     // Build the query to filter by class and student name
+    //     $query = Result::query();
+    
+    //     if ($request->has('class_id') && $request->class_id != '') {
+    //         $query->where('class_id', $request->class_id); // Filter by class ID
+    //     }
+    
+    //     if ($request->has('name') && $request->name != '') {
+    //         $query->where('name', 'like', '%' . $request->name . '%'); // Filter by student name
+    //     }
+    
+    //     // Fetch results
+    //     $results = $query->get();
+    
+    //     // Return the filtered results to the view
+    //     return view('pages.reports.exam', compact('results'));
+    // }
+    
     /**
      * Show the form for editing the specified resource.
      */

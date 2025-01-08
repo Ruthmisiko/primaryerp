@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Models\Result;
 use App\Models\Teacher;
 use PDF; // Import DomPDF facade
 
@@ -32,5 +33,17 @@ class PdfController extends Controller
 
         // Download the PDF with a specific name
         return $pdf->download('teachers-list.pdf');
+    }
+
+    public function reportp($id)
+    {
+        $results = Result::findOrFail($id);    
+        
+        dd($results);
+        
+        $pdf = PDF::loadView('pages.reports.result-pdf', compact('results'));
+
+        // Download the PDF with a specific name
+        return $pdf->download('student-report.pdf');
     }
 }

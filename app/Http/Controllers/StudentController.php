@@ -4,15 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Models\Classs;
+use App\Repositories\StudentRepository;
 
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    /**
-     * Display a listing of the students.
-     */
-    public function index()
+    /** @var StudentRepository $studentRepository*/
+    private $studentRepository;
+
+    public function __construct(StudentRepository $studentRepo)
+    {
+        $this->studentRepository = $studentRepo;
+    }
+
+    public function index()     
     {
         // Retrieve all students from the database
         $students = Student::paginate(10);
@@ -101,13 +107,17 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        // Find the student by id
-        $student = Student::findOrFail($id);
-
-        // Delete the student from the database
-        $student->delete();
-
-        // Redirect back to the students index page with success message
-        return redirect()->route('students.index')->with('success', 'Student deleted successfully');
+        $student = $this->studentRepository->find($id);
+    
+        if (empty($student)) {
+            Flash::error('Student not found');
+            return redirect()->route('students.index');
+        }
+    
+        $this->studentRepository->delete($id);
+        Flash::success('Student deleted successfully.');
+    
+        // Redirect to the teachers.index route to fetch the updated list
+        return redirect()->route('students.index');
     }
 }

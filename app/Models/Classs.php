@@ -30,5 +30,8 @@ class Classs extends Model
     {
         return $this->belongsTo(Teacher::class, 'teachers');
     }
-    
+    public function results()
+    {
+        return $this->hasMany(Result::class, 'class_id'); // Ensure 'class_id' is the foreign key in the 'students' table
+    }
 }

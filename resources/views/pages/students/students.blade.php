@@ -72,7 +72,11 @@
                                             </a>
                                             <a href="{{ route('students.edit', $student->id) }}" class="btn btn-info">Edit</a>
 
-                                            <a href="" class="btn btn-danger">Delete</a>
+                                            <form action="{{ route('students.destroy', $student->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this Student?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
                                       </td>
                                         
                                     </tr>

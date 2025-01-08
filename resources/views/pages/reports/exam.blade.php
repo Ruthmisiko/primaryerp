@@ -19,12 +19,12 @@
                     </div>
                     <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
                         <div class="d-flex justify-content-between">
-                        <a href="" class="btn btn-warning" style="margin-right: 10px;">
+                        <a href=""  class="btn btn-success" style="margin-right: 10px;">
                             Edit
                         </a>
                             <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-block d-lg-none"><i
                                     class="ni ni-collection"></i></a>
-                                    <form action=" " method="POST" class="d-inline-block" style="margin-right: 10px;">
+                        <form action=" " method="POST" class="d-inline-block" style="margin-right: 10px;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">
@@ -51,10 +51,33 @@
                         </div>
                        
                     </div>
+                    <form action="{{ route('upload') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="exam_id" value="{{ $exam->id }}">
+                    
+                        <!-- File input -->
+                        <label for="file">Select File:</label>
+                        <input type="file" name="file" id="file" required>
+                    
+                        <!-- Class dropdown -->
+                        <label for="class_id">Select Class:</label>
+                        <select name="class_id" id="class_id" required>
+                            <option value="" disabled selected>Select a class</option>
+                            @foreach($classes as $class)
+                                <option value="{{ $class->id }}">{{ $class->name }}</option>
+                            @endforeach
+                        </select>
+                    
+                        <!-- Submit button -->
+                        <button type="submit"  class="btn btn-success">Upload</button>
+                    </form>
+                    
                     </div>
                 </div>
             </div>
             <div class="row mt-4">
+                
+                
                 <div class="col-lg-9 mb-lg-0 mb-4">
                     <div class="card ">
                         <div class="card-header pb-0 p-3">
@@ -87,29 +110,33 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    
-                                        <tr>
+                                        @forelse ($exam->results as $result)
+                                                                            
+                                            <tr>
+                                                <td>{{ $result->name }}</td>
+                                                <td>{{ $result->kiswahili }}</td>
+                                                <td class="text-center">{{ $result->English }}</td>
+                                                <td class="text-center">{{ $result->Mathematics }}</td>
+                                                <td class="text-center">{{ $result->CRE }}</td>
+                                                <td class="text-center">{{ $result->Homescience }}</td>
+
+                                                <td class="align-middle">
                                         
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm"> </h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0"></p>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="text-secondary text-xs font-weight-bold"></span>
-                                            </td>
-                                                                                   
-                                            
+                                                    <a href="{{ route('reportt.pdf', $result->id) }}" class="btn btn-success"style=" margin-left: 30%;">
+                                                        Download
+                                                    </a>
+                                              </td>
+                                            </tr>
+                                                                                
+                                        @empty
+                                        <tr>
+                                            <td colspan="6" class="text-center">No results found for this exam.</td>
                                         </tr>
-                                  
+                                    @endforelse
                                     </tbody>
                                 </table>
-         
+           {{-- Pagination --}}
+  
                     </div>
                 </div>
                 

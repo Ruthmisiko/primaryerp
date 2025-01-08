@@ -19,7 +19,6 @@ return new class extends Migration
             $table->integer('Mathematics');
             $table->integer('CRE');
             $table->integer('Homescience');
-            $table->integer('class');
             $table->timestamps();
         });
     }
