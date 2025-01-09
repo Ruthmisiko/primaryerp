@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\MpesaSTKPUSHController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,3 +25,6 @@ Route::resource('teachers', App\Http\Controllers\API\TeacherAPIController::class
 Route::resource('students', App\Http\Controllers\API\StudentAPIController::class)
     ->except(['create', 'edit']);
 
+Route::post('v1/access/token', [MpesaSTKPUSHController::class, 'generateAccessToken']);
+
+Route::post('v1/hlab/stk/push', [MpesaSTKPUSHController::class, 'STKPush']);

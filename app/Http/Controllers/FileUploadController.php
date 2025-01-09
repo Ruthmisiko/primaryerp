@@ -23,12 +23,12 @@ class FileUploadController extends Controller
     $file = $request->file('file');
     $path = $file->store('uploads', 'public');
 
-    // Parse file and insert data into the database
-    $data = []; // Initialize an array to hold parsed data
+  
+    $data = []; 
 
     if ($file->getClientOriginalExtension() == 'csv') {
         $csvFile = fopen(storage_path("app/public/{$path}"), 'r');
-        $headers = fgetcsv($csvFile); // Assuming first row contains headers
+        $headers = fgetcsv($csvFile); 
 
         while (($row = fgetcsv($csvFile)) !== false) {
             $data[] = array_combine($headers, $row);
@@ -37,7 +37,7 @@ class FileUploadController extends Controller
         fclose($csvFile);
     }
 
-    // Save parsed data to the database
+   
     foreach ($data as $row) {
         Result::create([
             'name' => $row['name'],
@@ -47,7 +47,7 @@ class FileUploadController extends Controller
             'CRE' => $row['CRE'],
             'Homescience' => $row['Homescience'],
             'exam_id' => $request->input('exam_id'),
-            'class_id' => $request->input('class_id'), // Save the selected class
+            'class_id' => $request->input('class_id'), 
         ]);
     }
 

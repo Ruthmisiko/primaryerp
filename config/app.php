@@ -159,6 +159,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Illuminate\Cookie\CookieServiceProvider::class,
 
         /*
          * Application Service Providers...

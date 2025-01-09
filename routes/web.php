@@ -98,6 +98,10 @@ Route::resource('reports', ReportController::class);
 
 Route::post('/upload', [FileUploadController::class, 'upload'])->name('upload');
 
+//mpesa stk
+
+Route::post('v1/access/token', [MpesaSTKPUSHController::class, 'generateAccessToken']);
+
 
 
 

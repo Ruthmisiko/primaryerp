@@ -22,10 +22,6 @@ class StudentAPIController extends AppBaseController
         $this->studentRepository = $studentRepo;
     }
 
-    /**
-     * Display a listing of the Students.
-     * GET|HEAD /students
-     */
     public function index(Request $request): JsonResponse
     {
         $students = $this->studentRepository->all(
@@ -37,10 +33,7 @@ class StudentAPIController extends AppBaseController
         return $this->sendResponse($students->toArray(), 'Students retrieved successfully');
     }
 
-    /**
-     * Store a newly created Student in storage.
-     * POST /students
-     */
+    
     public function store(CreateStudentAPIRequest $request): JsonResponse
     {
         $input = $request->all();
